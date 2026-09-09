@@ -1,0 +1,78 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'API Gateway AWS CloudFormation template with customizable TLS version.'
+
+Parameters:
+  SecurityPolicyTLS:
+    Type: String
+    Default: 'TLS_1_0'
+    AllowedValues:
+      - 'TLS_1_0'
+      - 'TLS_1_2'
+    Description: 'The TLS version to use for the security policy.'
+
+Resources:
+  CustomDomainName:
+    Type: 'AWS::ApiGateway::DomainName'
+    Properties:
+      DomainName: 'api.mycompany.com'
+      CertificateArn: 'arn:aws:acm:us-east-1:123456789012:certificate/abcdef12-3456-7890-abcd-ef1234567890'
+      EndpointConfiguration:
+        Types:
+          - 'EDGE'
+      SecurityPolicy: !Ref SecurityPolicyTLS
+
+  CompanyRestApi:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      Name: 'CompanyServicesAPI'
+      Description: 'REST API for company services.'
+
+  InitialApiDeployment:
+    Type: 'AWS::ApiGateway::Deployment'
+    DependsOn:
+      - CompanyRestApi
+    Properties:
+      RestApiId: !Ref CompanyRestApi
+      Description: 'Initial deployment of Company Services API.'
+      StageName: 'placeholder'
+
+  ProductionStage:
+    Type: 'AWS::ApiGateway::Stage'
+    Properties:
+      StageName: 'production'
+      Description: 'Production stage of the Company Services API.'
+      RestApiId: !Ref CompanyRestApi
+      DeploymentId: !Ref InitialApiDeployment
+      CacheClusterEnabled: true
+      CacheClusterSize: '0.5'
+      MethodSettings:
+        - HttpMethod: "*"
+          ResourcePath: "/*"
+          MetricsEnabled: true
+          LoggingLevel: 'INFO'
+          DataTraceEnabled: true
+          ThrottlingRateLimit: 100
+          ThrottlingBurstLimit: 200
+          CachingEnabled: true
+          CacheDataEncrypted: true
+          CacheTtlInSeconds: 60
+      TracingEnabled: false
+      Variables:
+        environment: 'production'
+
+  DomainPathMapping:
+    Type: 'AWS::ApiGateway::BasePathMapping'
+    Properties:
+      DomainName: !Ref CustomDomainName
+      RestApiId: !Ref CompanyRestApi
+      Stage: !Ref ProductionStage
+      BasePath: '(none)'
+
+Outputs:
+  DomainNameURL:
+    Description: 'The URL of the custom domain name for the API Gateway'
+    Value: !GetAtt CustomDomainName.DistributionDomainName
+
+  ProductionEndpoint:
+    Description: 'The endpoint URL for the production stage of the API Gateway'
+    Value: !Sub 'https://${CustomDomainName.DistributionDomainName}/production'

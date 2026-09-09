@@ -1,0 +1,132 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "variables": {
+    "myInfraEncr": true,
+    "myKeySource": "somestring"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "nestedTemplate1",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "functions": [],
+          "variables": {},
+          "resources": [
+            {
+              "type": "Microsoft.Databricks/workspaces",
+              "apiVersion": "2023-02-01",
+              "name": "string",
+              "location": "string",
+              "tags": {
+                "tagName1": "tagValue1",
+                "tagName2": "tagValue2"
+              },
+              "sku": {
+                "name": "NotVuln",
+                "tier": "Free"
+              },
+              "properties": {
+                "authorizations": [
+                  {
+                    "principalId": "84648480-8e9d-11ee-b9d1-0242ac120002",
+                    "roleDefinitionId": "8e6b522e-8e9d-11ee-b9d1-0242ac120002"
+                  }
+                ],
+                "createdBy": {},
+                "encryption": {
+                  "entities": {
+                    "managedDisk": {
+                      "keySource": "Microsoft.KeyVault",
+                      "keyVaultProperties": {
+                        "keyName": "string",
+                        "keyVaultUri": "string",
+                        "keyVersion": "string"
+                      },
+                      "rotationToLatestKeyVersionEnabled": true
+                    },
+                    "managedServices": {
+                      "keySource": "Microsoft.KeyVault",
+                      "keyVaultProperties": {
+                        "keyName": "string",
+                        "keyVaultUri": "string",
+                        "keyVersion": "string"
+                      }
+                    }
+                  }
+                },
+                "managedDiskIdentity": {},
+                "managedResourceGroupId": "string",
+                "parameters": {
+                  "amlWorkspaceId": {
+                    "value": "string"
+                  },
+                  "customPrivateSubnetName": {
+                    "value": "string"
+                  },
+                  "customPublicSubnetName": {
+                    "value": "string"
+                  },
+                  "customVirtualNetworkId": {
+                    "value": "string"
+                  },
+                  "enableNoPublicIp": {
+                    "value": true
+                  },
+                  "encryption": {
+                    "value": {
+                      "KeyName": "string",
+                      "keySource": "[variables('myKeySource')]",
+                      "keyvaulturi": "string",
+                      "keyversion": "string"
+                    }
+                  },
+                  "loadBalancerBackendPoolName": {
+                    "value": "string"
+                  },
+                  "loadBalancerId": {
+                    "value": "string"
+                  },
+                  "natGatewayName": {
+                    "value": "string"
+                  },
+                  "prepareEncryption": {
+                    "value": true
+                  },
+                  "publicIpName": {
+                    "value": "string"
+                  },
+                  "requireInfrastructureEncryption": {
+                    "value": "[variables('myInfraEncr')]"
+                  },
+                  "storageAccountName": {
+                    "value": "string"
+                  },
+                  "storageAccountSkuName": {
+                    "value": "string"
+                  },
+                  "vnetAddressPrefix": {
+                    "value": "string"
+                  }
+                },
+                "publicNetworkAccess": "Enabled",
+                "requiredNsgRules": "AllRules",
+                "storageAccountIdentity": {},
+                "uiDefinitionUri": "string",
+                "updatedBy": {}
+              }
+            }
+          ],
+          "outputs": {}
+        }
+      }
+    }
+  ]
+}

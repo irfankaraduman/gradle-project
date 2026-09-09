@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "myKeySource": {
+            "type": "string"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.NetApp/netAppAccounts",
+            "apiVersion": "2022-05-01",
+            "name": "string",
+            "location": "string",
+            "tags": {
+                "tagName1": "tagValue1",
+                "tagName2": "tagValue2"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {}
+            },
+            "properties": {
+                "activeDirectories": [
+                    {
+                        "activeDirectoryId": "string",
+                        "administrators": [ "string" ],
+                        "adName": "string",
+                        "aesEncryption": true,
+                        "allowLocalNfsUsersWithLdap": true,
+                        "backupOperators": [ "string" ],
+                        "dns": "8.8.8.8",
+                        "domain": "string",
+                        "encryptDCConnections": true,
+                        "kdcIP": "10.0.0.1",
+                        "ldapOverTLS": true,
+                        "ldapSearchScope": {
+                            "groupDN": "string",
+                            "groupMembershipFilter": "string",
+                            "userDN": "string"
+                        },
+                        "ldapSigning": true,
+                        "organizationalUnit": "string",
+                        "password": "string",
+                        "securityOperators": [ "string" ],
+                        "serverRootCACertificate": "string",
+                        "site": "string",
+                        "smbServerName": "string",
+                        "username": "string"
+                    }
+                ],
+                "encryption": {
+                    "identity": {
+                        "userAssignedIdentity": "string"
+                    },
+                    "keySource": "[parameters('myKeySource')]",
+                    "keyVaultProperties": {
+                        "keyName": "string",
+                        "keyVaultResourceId": "string",
+                        "keyVaultUri": "string"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

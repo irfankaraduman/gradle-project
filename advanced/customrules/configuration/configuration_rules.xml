@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RulePack xmlns="xmlns://www.fortifysoftware.com/schema/rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RulePack">
+    <RulePackID>Rules Training</RulePackID>
+    <SKU>NA</SKU>
+    <Name><![CDATA[Configuration Rulepack]]></Name>
+    <Activated>true</Activated>
+    <Version>3.0</Version>
+    <Description><![CDATA[]]></Description>
+    <Rules version="3.2">
+        <Notes><![CDATA[]]></Notes>
+        <RuleDefinitions>
+            <ConfigurationRule formatVersion="3.2">
+                <RuleID>1131F8B2-DAE6-4559-8947-4FBAF4D2AAE4</RuleID>
+                <Notes><![CDATA[This rule issues a warning when any feature specified in any 
+properties file is turned off.]]></Notes>
+                <VulnCategory>J2EE Misconfiguration</VulnCategory>
+                <DefaultSeverity>2.0</DefaultSeverity>
+                <Description>
+                    <Abstract append="false"/>
+                    <Explanation append="false"/>
+                    <Recommendations append="false"/>
+                    <Tips>
+                        <Tip append="false"/>
+                    </Tips>
+                </Description>
+                <ConfigFile type="properties">
+                    <Pattern caseInsensitive="false" multiline="false" inStringMatch="false">.*</Pattern>
+                </ConfigFile>
+                <PropertyMatch>
+                    <NameMatch>
+                        <Pattern caseInsensitive="false"
+                            multiline="false" inStringMatch="false">(.*)\.on</Pattern>
+                    </NameMatch>
+                    <ValueMatch>
+                        <Value caseInsensitive="false">false</Value>
+                    </ValueMatch>
+                </PropertyMatch>
+            </ConfigurationRule>
+            <ConfigurationRule formatVersion="3.2">
+                <RuleID>69C759B8-AADD-4EC3-A1FB-324D96158293</RuleID>
+                <Notes><![CDATA[This rule issues a warning when either "scott" or "tiger" is defined to be a username in any properties file.]]></Notes>
+                <VulnCategory>J2EE Misconfiguration</VulnCategory>
+                <DefaultSeverity>2.0</DefaultSeverity>
+                <Description>
+                    <Abstract append="false"/>
+                    <Explanation append="false"/>
+                    <Recommendations append="false"/>
+                    <Tips>
+                        <Tip append="false"/>
+                    </Tips>
+                </Description>
+                <ConfigFile type="properties">
+                    <Pattern caseInsensitive="false" multiline="false" inStringMatch="false">.*</Pattern>
+                </ConfigFile>
+                <PropertyMatch>
+                    <NameMatch>
+                        <Pattern caseInsensitive="false"
+                            multiline="false" inStringMatch="false">(.*)uname|(.*)username|(.*)usrname</Pattern>
+                    </NameMatch>
+                    <ValueMatch>
+                        <Pattern caseInsensitive="false"
+                            multiline="false" inStringMatch="false">scott|tiger</Pattern>
+                    </ValueMatch>
+                </PropertyMatch>
+            </ConfigurationRule>
+            <ConfigurationRule formatVersion="3.3">
+                <RuleID>8572C03E-9490-49C2-A504-87599E0B93BD</RuleID>
+                <Notes><![CDATA[This rule issues a warning when encryption feature is turned off in 
+any xml configuration file.]]></Notes>
+                <VulnCategory>J2EE Misconfiguration</VulnCategory>
+                <DefaultSeverity>3.0</DefaultSeverity>
+                <Description>
+                    <Abstract append="false"/>
+                    <Explanation append="false"/>
+                    <Recommendations append="false"/>
+                    <Tips>
+                        <Tip append="false"/>
+                    </Tips>
+                </Description>
+                <ConfigFile type="xml">
+                    <Pattern caseInsensitive="false" multiline="false" inStringMatch="false">.*</Pattern>
+                </ConfigFile>
+                <XPathMatch expression="//encryption['off']"/>
+            </ConfigurationRule>
+        </RuleDefinitions>
+    </Rules>
+</RulePack>

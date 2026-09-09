@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RulePack xmlns="xmlns://www.fortifysoftware.com/schema/rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RulePack">
+    <RulePackID>Rules Training</RulePackID>
+    <SKU>NA</SKU>
+    <Name><![CDATA[Dataflow Rulepack]]></Name>
+    <Activated>true</Activated>
+    <Version>3.0</Version>
+    <Description><![CDATA[]]></Description>
+    <Rules version="3.2">
+        <Notes><![CDATA[]]></Notes>
+        <RuleDefinitions>
+            <DataflowSourceRule formatVersion="3.2" language="java">
+                <RuleID>3F3F5D02-276F-45C0-9C88-1D3EF93F6E23</RuleID>
+                <Notes><![CDATA[This rule marks return from getWebInput() to be the source of tainted data.]]></Notes>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Fruit</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">getWebInput</Value>
+                    </FunctionName>
+                    <ApplyTo implements="false" overrides="false" extends="true"/>
+                </FunctionIdentifier>
+                <OutArguments>return</OutArguments>
+            </DataflowSourceRule>
+            <DataflowEntryPointRule formatVersion="3.2" language="java">
+                <RuleID>89364483-E4DC-4EDC-8568-E904F625BAEB</RuleID>
+                <Notes><![CDATA[This rule indicates that all the arguments to an entrypoint function 
+getCommandLine() should be considered sources of tainted data.]]></Notes>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Pattern caseInsensitive="false"
+                            multiline="false" inStringMatch="false">.*</Pattern>
+                    </NamespaceName>
+                    <ClassName>
+                        <Pattern caseInsensitive="false"
+                            multiline="false" inStringMatch="false">.*</Pattern>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">getCommandLine</Value>
+                    </FunctionName>
+                </FunctionIdentifier>
+                <InArguments>0...</InArguments>
+            </DataflowEntryPointRule>
+            <DataflowPassthroughRule formatVersion="3.2" language="java">
+                <RuleID>4E447F79-71D8-44E2-8A38-FA30F8E329C2</RuleID>
+                <Notes><![CDATA[This rule is used for propagating tainted data from the first argument of putInBasket() to the object that calls it.]]></Notes>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Basket</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">putInBasket</Value>
+                    </FunctionName>
+                </FunctionIdentifier>
+                <InArguments>0</InArguments>
+                <OutArguments>this</OutArguments>
+            </DataflowPassthroughRule>
+            <DataflowPassthroughRule formatVersion="3.2" language="java">
+                <RuleID>9BE28221-11B3-49A7-9EAC-0FB094690168</RuleID>
+                <Notes><![CDATA[This rule is used for propagating tainted data from the object that 
+calls getFirstFruit() to its return value.]]></Notes>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Basket</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">getFirstFruit</Value>
+                    </FunctionName>
+                </FunctionIdentifier>
+                <InArguments>this</InArguments>
+                <OutArguments>return</OutArguments>
+            </DataflowPassthroughRule>
+            <DataflowPassthroughRule formatVersion="3.2" language="java">
+                <RuleID>AEBE06F8-EF7B-426C-8483-BD4C03D452DD</RuleID>
+                <Notes><![CDATA[This rule is used for propagating tainted data from the first argument of the constructor to the object being constructed.]]></Notes>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Orange</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">Orange</Value>
+                    </FunctionName>
+                </FunctionIdentifier>
+                <InArguments>0</InArguments>
+                <OutArguments>this</OutArguments>
+            </DataflowPassthroughRule>
+            <DataflowSinkRule formatVersion="3.2" language="java">
+                <RuleID>E2443A17-64BF-4E5B-8727-C39BAFF0DD99</RuleID>
+                <Notes><![CDATA[This rule issues a SQL Injection warning when any arguments to a 
+function whose name starts with "execute" are tainted.]]></Notes>
+                <VulnCategory>SQL Injection</VulnCategory>
+                <DefaultSeverity>4.0</DefaultSeverity>
+                <Description>
+                    <Abstract append="false"/>
+                    <Explanation append="false"/>
+                    <Recommendations append="false"/>
+                    <Tips>
+                        <Tip append="false"/>
+                    </Tips>
+                </Description>
+                <Sink>
+                    <InArguments>0...</InArguments>
+                </Sink>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">FruitDatabase</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Pattern caseInsensitive="false"
+                            multiline="false" inStringMatch="false">execute(.*)</Pattern>
+                    </FunctionName>
+                </FunctionIdentifier>
+            </DataflowSinkRule>
+            <DataflowCleanseRule formatVersion="3.2" language="java">
+                <RuleID>4F86478E-AE0D-403A-8993-3A2D351690B2</RuleID>
+                <Notes><![CDATA[This rule is used for cleansing the object that calls washFruit() from 
+taint.]]></Notes>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Fruit</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">washFruit</Value>
+                    </FunctionName>
+                    <ApplyTo implements="false" overrides="false" extends="true"/>
+                </FunctionIdentifier>
+                <OutArguments>this</OutArguments>
+            </DataflowCleanseRule>
+        </RuleDefinitions>
+    </Rules>
+</RulePack>

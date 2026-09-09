@@ -1,0 +1,67 @@
+/*
+ * @description
+ * CWE: 590 Free Memory Not on Heap
+ * BadSource: alloca Data buffer is allocated on the stack with alloca()
+ * GoodSource: Allocate memory on the heap
+ * Sink:
+ *    BadSink : Print then free data
+ * Flow Variant: 01 Baseline
+ *
+ * */
+
+#include "cwe590.hpp"
+
+#include <wchar.h>
+#include <cstring>
+#include <alloca.h>
+
+#include "printio.hpp"
+
+namespace CWE590_Free_Memory_Not_on_Heap__delete_array_char_alloca_01
+{
+
+#ifndef OMITBAD
+
+void bad()
+{
+    char * data;
+    data = NULL; /* Initialize data */
+    {
+        /* FLAW: data is allocated on the stack and deallocated in the BadSink */
+        char * dataBuffer = (char *)alloca(100*sizeof(char));
+        std::memset(dataBuffer, 'A', 100-1); /* fill with 'A's */
+        dataBuffer[100-1] = '\0'; /* null terminate */
+        data = dataBuffer;
+    }
+    printLine(data);
+    /* POTENTIAL FLAW: Possibly deallocating memory allocated on the stack */
+    delete [] data;
+}
+
+#endif /* OMITBAD */
+
+#ifndef OMITGOOD
+
+/* goodG2B uses the GoodSource with the BadSink */
+static void goodG2B()
+{
+    char * data;
+    data = NULL; /* Initialize data */
+    {
+        /* FIX: data is allocated on the heap and deallocated in the BadSink */
+        char * dataBuffer = new char[100];
+        std::memset(dataBuffer, 'A', 100-1); /* fill with 'A's */
+        dataBuffer[100-1] = '\0'; /* null terminate */
+        data = dataBuffer;
+    }
+    printLine(data);
+    /* POTENTIAL FLAW: Possibly deallocating memory allocated on the stack */
+    delete [] data;
+}
+
+void good()
+{
+    goodG2B();
+}
+#endif /* OMITGOOD */
+} /* close namespace */

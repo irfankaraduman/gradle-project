@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RulePack xmlns="xmlns://www.fortifysoftware.com/schema/rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RulePack">
+    <RulePackID>Rules Training</RulePackID>
+    <SKU>NA</SKU>
+    <Name><![CDATA[Semantic Rulepack]]></Name>
+    <Activated>true</Activated>
+    <Version>3.0</Version>
+    <Description><![CDATA[]]></Description>
+    <Rules version="3.2">
+        <Notes><![CDATA[]]></Notes>
+        <RuleDefinitions>
+            <SemanticRule formatVersion="3.2" language="java">
+                <RuleID>F4AA02C1-EA23-4175-963C-5437C7E4DCA9</RuleID>
+                <Notes><![CDATA[This rule issues a warning whenever a function foo() defined in any 
+class of any package is called.]]></Notes>
+                <VulnCategory>Unconditional</VulnCategory>
+                <DefaultSeverity>3.0</DefaultSeverity>
+                <Description>
+                    <Abstract append="false"/>
+                    <Explanation append="false"/>
+                    <Recommendations append="false"/>
+                    <Tips>
+                        <Tip append="false"/>
+                    </Tips>
+                </Description>
+                <Type>default</Type>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Pattern caseInsensitive="false"
+                            multiline="false" inStringMatch="false">.*</Pattern>
+                    </NamespaceName>
+                    <ClassName>
+                        <Pattern caseInsensitive="false"
+                            multiline="false" inStringMatch="false">.*</Pattern>
+                    </ClassName>
+                    <FunctionName>
+                        <Pattern caseInsensitive="false"
+                            multiline="false" inStringMatch="false">foo(.*)</Pattern>
+                    </FunctionName>
+                </FunctionIdentifier>
+            </SemanticRule>
+            <SemanticRule formatVersion="3.2" language="java">
+                <RuleID>6CB90E9D-1B2F-485C-B19C-0E33957B2DE3</RuleID>
+                <Notes><![CDATA[This rule issues a warning whenever the return value of noFoo() is 
+not checked -- not assigned to any other variable.]]></Notes>
+                <VulnCategory>Unchecked Return Value</VulnCategory>
+                <DefaultSeverity>2.0</DefaultSeverity>
+                <Description>
+                    <Abstract append="false"/>
+                    <Explanation append="false"/>
+                    <Recommendations append="false"/>
+                    <Tips>
+                        <Tip append="false"/>
+                    </Tips>
+                </Description>
+                <Type>uncheckedReturnValue</Type>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.foo</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Foo</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">noFoo</Value>
+                    </FunctionName>
+                </FunctionIdentifier>
+            </SemanticRule>
+            <SemanticRule formatVersion="3.2" language="java">
+                <RuleID>82EB7E80-FC3C-455E-BC34-09E87C5636D4</RuleID>
+                <Notes><![CDATA[This rule issues a warning whenever the first argument to function 
+foo() defined in class Bar of package foo.bar is either not a 
+constant, does not represent absolute path to the command to be 
+executed, or uses environment variable to construct the command 
+to be executed.]]></Notes>
+                <VulnCategory>Process Control</VulnCategory>
+                <DefaultSeverity>5.0</DefaultSeverity>
+                <Description>
+                    <Abstract append="false"/>
+                    <Explanation append="false"/>
+                    <Recommendations append="false"/>
+                    <Tips>
+                        <Tip append="false"/>
+                    </Tips>
+                </Description>
+                <Type>processControl</Type>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.bar</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Bar</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">foo</Value>
+                    </FunctionName>
+                </FunctionIdentifier>
+                <ExecutionPathArgument>0</ExecutionPathArgument>
+            </SemanticRule>
+        </RuleDefinitions>
+    </Rules>
+</RulePack>

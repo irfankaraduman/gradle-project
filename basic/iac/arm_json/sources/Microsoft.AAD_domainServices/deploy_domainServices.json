@@ -1,0 +1,83 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.AAD/domainServices",
+            "apiVersion": "2021-03-01",
+            "name": "string",
+            "location": "string",
+            "tags": {
+                "tagName1": "tagValue1",
+                "tagName2": "tagValue2"
+            },
+            "properties": {
+                "configDiagnostics": {
+                    "lastExecuted": "string",
+                    "validatorResults": [
+                        {
+                            "issues": [
+                                {
+                                    "descriptionParams": [ "string" ],
+                                    "id": "string"
+                                }
+                            ],
+                            "replicaSetSubnetDisplayName": "string",
+                            "status": "string",
+                            "validatorId": "string"
+                        }
+                    ]
+                },
+                "domainConfigurationType": "string",
+                "domainName": "string",
+                "domainSecuritySettings": {
+                    "channelBinding": "string",
+                    "kerberosArmoring": "Enabled",
+                    "kerberosRc4Encryption": "Enabled",
+                    "ldapSigning": "string",
+                    "ntlmV1": "Enabled",
+                    "syncKerberosPasswords": "Enabled",
+                    "syncNtlmPasswords": "Enabled",
+                    "syncOnPremPasswords": "Enabled",
+                    "tlsV1": "Enabled"
+                },
+                "filteredSync": "Enabled",
+                "ldapsSettings": {
+                    "externalAccess": "Enabled",
+                    "ldaps": "Enabled",
+                    "pfxCertificate": "string",
+                    "pfxCertificatePassword": "string"
+                },
+                "notificationSettings": {
+                    "additionalRecipients": [ "string" ],
+                    "notifyDcAdmins": "Enabled",
+                    "notifyGlobalAdmins": "Enabled"
+                },
+                "replicaSets": [
+                    {
+                        "location": "string",
+                        "subnetId": "string"
+                    }
+                ],
+                "resourceForestSettings": {
+                    "resourceForest": "string",
+                    "settings": [
+                        {
+                            "friendlyName": "string",
+                            "remoteDnsIps": "string",
+                            "trustDirection": "string",
+                            "trustedDomainFqdn": "string",
+                            "trustPassword": "string"
+                        }
+                    ]
+                },
+                "sku": "string",
+                "syncScope": "string"
+            }
+        }
+    ],
+    "outputs": {}
+}

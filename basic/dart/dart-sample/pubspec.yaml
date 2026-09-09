@@ -1,0 +1,4 @@
+name: sample_sast_project
+description: Sample Dart project for SAST vulnerabilities
+environment:
+  sdk: '>=2.12.0 <4.0.0'

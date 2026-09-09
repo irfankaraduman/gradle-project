@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RulePack xmlns="xmlns://www.fortifysoftware.com/schema/rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RulePack">
+    <RulePackID>Rules Training</RulePackID>
+    <SKU>NA</SKU>
+    <Name><![CDATA[Controlflow Rulepack]]></Name>
+    <Activated>true</Activated>
+    <Version>3.0</Version>
+    <Description><![CDATA[]]></Description>
+    <Rules version="3.2">
+        <Notes><![CDATA[]]></Notes>
+        <RuleDefinitions>
+            <ControlflowRule formatVersion="3.2" language="java">
+                <RuleID>96767B01-2689-4A89-9BFF-93D6F23E11E3</RuleID>
+                <Notes><![CDATA[This rule issues a warning when the basket with fruits is not emptied before the end of the function is 
+reached.]]></Notes>
+                <VulnCategory>Unreleased Resource</VulnCategory>
+                <DefaultSeverity>3.0</DefaultSeverity>
+                <Description>
+                    <Abstract append="false"/>
+                    <Explanation append="false"/>
+                    <Recommendations append="false"/>
+                    <Tips>
+                        <Tip append="false"/>
+                    </Tips>
+                </Description>
+                <FunctionIdentifier id="get">
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Fruit</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">getWebInput</Value>
+                    </FunctionName>
+                    <ApplyTo implements="false" overrides="false" extends="true"/>
+                </FunctionIdentifier>
+                <FunctionIdentifier id="empty">
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Basket</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">emptyBasket</Value>
+                    </FunctionName>
+                </FunctionIdentifier>
+                <FunctionIdentifier id="put">
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Basket</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">putInBasket</Value>
+                    </FunctionName>
+                </FunctionIdentifier>
+                <Definition><![CDATA[state startState(start);
+state getState;
+state putInBasket;
+state releaseState;
+state endState(error);
+var fruit;
+var basket;
+                                                                                                                                                             
+startState -> getState { fruit = $get(...) }
+getState -> putInBasket { basket.$put(fruit) }
+putInBasket -> releaseState { basket.$empty(...) }
+putInBasket -> endState { #end_function() }]]></Definition>
+            </ControlflowRule>
+            <ControlflowRule formatVersion="3.2" language="java">
+                <RuleID>FF64A23A-5B70-4633-B464-C7E0CB61D21E</RuleID>
+                <Notes><![CDATA[This rule issues a warning when the fruit retrieved from the web is 
+not checked against null before being used.]]></Notes>
+                <VulnCategory>Null Dereference</VulnCategory>
+                <DefaultSeverity>4.0</DefaultSeverity>
+                <Description>
+                    <Abstract append="false"/>
+                    <Explanation append="false"/>
+                    <Recommendations append="false"/>
+                    <Tips>
+                        <Tip append="false"/>
+                    </Tips>
+                </Description>
+                <FunctionIdentifier id="get">
+                    <NamespaceName>
+                        <Value caseInsensitive="false">com.fruit</Value>
+                    </NamespaceName>
+                    <ClassName>
+                        <Value caseInsensitive="false">Fruit</Value>
+                    </ClassName>
+                    <FunctionName>
+                        <Value caseInsensitive="false">getWebInput</Value>
+                    </FunctionName>
+                    <ApplyTo implements="false" overrides="false" extends="true"/>
+                </FunctionIdentifier>
+                <Definition><![CDATA[state startState(start);
+state getState;
+state checkState;
+state useState(error);
+var f;
+
+pattern comparePattern { #compare(f, null) }
+
+startState -> getState { f = $get(...) }
+getState -> checkState { pattern comparePattern }
+getState -> useState { f }]]></Definition>
+            </ControlflowRule>
+        </RuleDefinitions>
+    </Rules>
+</RulePack>

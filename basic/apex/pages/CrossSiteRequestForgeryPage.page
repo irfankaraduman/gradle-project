@@ -1,0 +1,2 @@
+<apex:page controller="CrossSiteRequestForgeryController" action="{!updateProfile}">
+</apex:page>

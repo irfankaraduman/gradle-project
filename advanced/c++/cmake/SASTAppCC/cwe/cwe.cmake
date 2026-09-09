@@ -1,0 +1,7 @@
+list(APPEND CWE_SOURCE_FILES
+  ${PROJECT_SOURCE_DIR}/cwe/cwe124.cpp
+)
+
+list(APPEND CWE_HEADER_FILES
+  ${PROJECT_SOURCE_DIR}/cwe/cwe124.hpp
+)

@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RulePack xmlns="xmlns://www.fortifysoftware.com/schema/rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RulePack">
+    <RulePackID>393BB540-BC44-4C93-9EB5-F0CD57E2C47C</RulePackID>
+    <SKU>NA</SKU>
+    <Name>Comments Rules</Name>
+    <Version>4.0.0</Version>
+    <Description></Description>
+    <Rules version="3.2">
+        <Notes><![CDATA[]]></Notes>
+        <RuleDefinitions>
+                <StructuralRule formatVersion="3.3" language="java">
+                        <RuleID>F62BEF43-7349-4971-BCDC-B28AC43E9766</RuleID>
+                        <VulnKingdom>Code Quality</VulnKingdom>
+                        <VulnCategory>Informative Comment</VulnCategory>
+                        <DefaultSeverity>2.0</DefaultSeverity>
+                        <Description>
+                              <Abstract>Comments may give an insight into the quality of the code.</Abstract>
+                              <Explanation>In many cases, comments contain information about how the code is working or intended to be working. This information may provide an insight into the quality of the code.</Explanation>
+                              <Recommendations/>
+                        </Description>
+                        <Predicate><![CDATA[
+                        	Comment: (doc or inline or block) and text matches ".*FIXME.*"
+                        ]]></Predicate>
+                </StructuralRule>
+                <StructuralRule formatVersion="3.3" language="java">
+                        <RuleID>6F254E02-25CB-43A4-8840-1D9258FDE884</RuleID>
+                        <VulnKingdom>Code Quality</VulnKingdom>
+                        <VulnCategory>Missing Copyright Notice</VulnCategory>
+                        <DefaultSeverity>2.0</DefaultSeverity>
+                        <Description>
+                              <Abstract>Correct copyright notice is required at the top of all the files.</Abstract>
+                              <Explanation>All files in the codebase are required to have an up-to-date copyright notice.</Explanation>
+                              <Recommendations/>
+                        </Description>
+                        <Predicate><![CDATA[
+                        	CommentFile: not (comments contains
+                                	[Comment:
+                                        	text matches ".*Copyright \(C\) 200[3-6], Fortify Software.*"
+                                        	and sourceLocation.startLine == 1
+                                	])
+                        ]]></Predicate>
+                </StructuralRule>
+	</RuleDefinitions>
+    </Rules>
+    <Localization>
+        <Mapping>
+            <KeyString>API Abuse</KeyString>
+            <LocalString>API Abuse</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>ASP.NET Misconfiguration</KeyString>
+            <LocalString>ASP.NET Misconfiguration</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Access Control</KeyString>
+            <LocalString>Access Control</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Access Violation</KeyString>
+            <LocalString>Access Violation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Authentication</KeyString>
+            <LocalString>Authentication</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Broken Override</KeyString>
+            <LocalString>Broken Override</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Buffer Overflow</KeyString>
+            <LocalString>Buffer Overflow</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Call to System.gc()</KeyString>
+            <LocalString>Call to System.gc()</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Call to Thread.run()</KeyString>
+            <LocalString>Call to Thread.run()</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Class Does Not Implement Cloneable</KeyString>
+            <LocalString>Class Does Not Implement Cloneable</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Code Correctness</KeyString>
+            <LocalString>Code Correctness</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Code Quality</KeyString>
+            <LocalString>Code Quality</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Command Injection</KeyString>
+            <LocalString>Command Injection</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Confusing Naming</KeyString>
+            <LocalString>Confusing Naming</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Cross-Site Scripting</KeyString>
+            <LocalString>Cross-Site Scripting</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Dangerous Function</KeyString>
+            <LocalString>Dangerous Function</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Dead Code</KeyString>
+            <LocalString>Dead Code</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Debug Information</KeyString>
+            <LocalString>Debug Information</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Directory Restriction</KeyString>
+            <LocalString>Directory Restriction</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Double Free</KeyString>
+            <LocalString>Double Free</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Double-Checked Locking</KeyString>
+            <LocalString>Double-Checked Locking</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Duplicate Validation Forms</KeyString>
+            <LocalString>Duplicate Validation Forms</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>EJB Bad Practices</KeyString>
+            <LocalString>EJB Bad Practices</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Empty Catch Block</KeyString>
+            <LocalString>Empty Catch Block</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Empty Password in Configuration File</KeyString>
+            <LocalString>Empty Password in Configuration File</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Empty Synchronized Block</KeyString>
+            <LocalString>Empty Synchronized Block</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Encapsulation</KeyString>
+            <LocalString>Encapsulation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Environment</KeyString>
+            <LocalString>Environment</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Erroneous String Compare</KeyString>
+            <LocalString>Erroneous String Compare</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Erroneous clone() Method</KeyString>
+            <LocalString>Erroneous clone() Method</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Erroneous finalize() Method</KeyString>
+            <LocalString>Erroneous finalize() Method</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Erroneous validate() Method</KeyString>
+            <LocalString>Erroneous validate() Method</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Errors</KeyString>
+            <LocalString>Errors</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Exception Handling</KeyString>
+            <LocalString>Exception Handling</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Explicit Call to finalize()</KeyString>
+            <LocalString>Explicit Call to finalize()</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Expression is Always false</KeyString>
+            <LocalString>Expression is Always false</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Expression is Always true</KeyString>
+            <LocalString>Expression is Always true</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>File Access Race Condition</KeyString>
+            <LocalString>File Access Race Condition</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>File System</KeyString>
+            <LocalString>File System</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Form Does Not Extend Validation Class</KeyString>
+            <LocalString>Form Does Not Extend Validation Class</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Form Field Without Validator</KeyString>
+            <LocalString>Form Field Without Validator</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Format String</KeyString>
+            <LocalString>Format String</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>HTTP Response Splitting</KeyString>
+            <LocalString>HTTP Response Splitting</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Hardcoded Password</KeyString>
+            <LocalString>Hardcoded Password</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Heap Inspection</KeyString>
+            <LocalString>Heap Inspection</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Hibernate</KeyString>
+            <LocalString>Hibernate</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Identifier Contains Dollar Symbol ($)</KeyString>
+            <LocalString>Identifier Contains Dollar Symbol ($)</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Identity Impersonation</KeyString>
+            <LocalString>Identity Impersonation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Illegal Pointer Value</KeyString>
+            <LocalString>Illegal Pointer Value</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Incomplete Error Handling</KeyString>
+            <LocalString>Incomplete Error Handling</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Inconsistent Implementations</KeyString>
+            <LocalString>Inconsistent Implementations</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Inner Class</KeyString>
+            <LocalString>Inner Class</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Input Validation and Representation</KeyString>
+            <LocalString>Input Validation and Representation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Insecure Compiler Optimization</KeyString>
+            <LocalString>Insecure Compiler Optimization</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Insecure Randomness</KeyString>
+            <LocalString>Insecure Randomness</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Insecure Temporary File</KeyString>
+            <LocalString>Insecure Temporary File</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Insecure Transport</KeyString>
+            <LocalString>Insecure Transport</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Insufficient Session-ID Length</KeyString>
+            <LocalString>Insufficient Session-ID Length</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Integer Overflow</KeyString>
+            <LocalString>Integer Overflow</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>J2EE Bad Practices</KeyString>
+            <LocalString>J2EE Bad Practices</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>J2EE Misconfiguration</KeyString>
+            <LocalString>J2EE Misconfiguration</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Just one of equals() and hashCode() Defined</KeyString>
+            <LocalString>Just one of equals() and hashCode() Defined</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Least Privilege Violation</KeyString>
+            <LocalString>Least Privilege Violation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Leftover Debug Code</KeyString>
+            <LocalString>Leftover Debug Code</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Log Forging</KeyString>
+            <LocalString>Log Forging</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Log Forging (debug)</KeyString>
+            <LocalString>Log Forging (debug)</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Logger Is Not Declared Static Final</KeyString>
+            <LocalString>Logger Is Not Declared Static Final</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Member Field Race Condition</KeyString>
+            <LocalString>Member Field Race Condition</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Memory Leak</KeyString>
+            <LocalString>Memory Leak</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Missing Catch Block</KeyString>
+            <LocalString>Missing Catch Block</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Missing Check against Null</KeyString>
+            <LocalString>Missing Check against Null</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Missing Error Handling</KeyString>
+            <LocalString>Missing Error Handling</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Missing Request Validation</KeyString>
+            <LocalString>Missing Request Validation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Missing XML Validation</KeyString>
+            <LocalString>Missing XML Validation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Misspelled Method Name</KeyString>
+            <LocalString>Misspelled Method Name</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Multiple Loggers</KeyString>
+            <LocalString>Multiple Loggers</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Non-Serializable Object Stored in Session</KeyString>
+            <LocalString>Non-Serializable Object Stored in Session</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Null Dereference</KeyString>
+            <LocalString>Null Dereference</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Object Model Violation</KeyString>
+            <LocalString>Object Model Violation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Obsolete</KeyString>
+            <LocalString>Obsolete</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Often Misused</KeyString>
+            <LocalString>Often Misused</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Overly Broad Catch</KeyString>
+            <LocalString>Overly Broad Catch</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Overly Broad Throws</KeyString>
+            <LocalString>Overly Broad Throws</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Password Management</KeyString>
+            <LocalString>Password Management</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Password in Configuration File</KeyString>
+            <LocalString>Password in Configuration File</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Path Manipulation</KeyString>
+            <LocalString>Path Manipulation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Plugin Framework Not In Use</KeyString>
+            <LocalString>Plugin Framework Not In Use</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Poor Error Handling</KeyString>
+            <LocalString>Poor Error Handling</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Poor Logging Practice</KeyString>
+            <LocalString>Poor Logging Practice</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Poor Style</KeyString>
+            <LocalString>Poor Style</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Portability Flaw</KeyString>
+            <LocalString>Portability Flaw</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Privacy Violation</KeyString>
+            <LocalString>Privacy Violation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Privilege Management</KeyString>
+            <LocalString>Privilege Management</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Process Control</KeyString>
+            <LocalString>Process Control</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Program Catches NullPointerException</KeyString>
+            <LocalString>Program Catches NullPointerException</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Public finalize() Method</KeyString>
+            <LocalString>Public finalize() Method</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Resource Injection</KeyString>
+            <LocalString>Resource Injection</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Return inside Finally</KeyString>
+            <LocalString>Return inside Finally</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>SQL Injection</KeyString>
+            <LocalString>SQL Injection</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Security Features</KeyString>
+            <LocalString>Security Features</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Session Fixation</KeyString>
+            <LocalString>Session Fixation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Setting Manipulation</KeyString>
+            <LocalString>Setting Manipulation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Sockets</KeyString>
+            <LocalString>Sockets</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>String Termination Error</KeyString>
+            <LocalString>String Termination Error</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Strings</KeyString>
+            <LocalString>Strings</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Struts</KeyString>
+            <LocalString>Struts</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>System Information Leak</KeyString>
+            <LocalString>System Information Leak</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>System.exit</KeyString>
+            <LocalString>System.exit</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Threads</KeyString>
+            <LocalString>Threads</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Time and State</KeyString>
+            <LocalString>Time and State</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Trust Boundary Violation</KeyString>
+            <LocalString>Trust Boundary Violation</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unchecked Return Value</KeyString>
+            <LocalString>Unchecked Return Value</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Undefined Behavior</KeyString>
+            <LocalString>Undefined Behavior</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Uninitialized Variable</KeyString>
+            <LocalString>Uninitialized Variable</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unreleased Resource</KeyString>
+            <LocalString>Unreleased Resource</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unsafe Array Declaration</KeyString>
+            <LocalString>Unsafe Array Declaration</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unsafe Bean Declaration</KeyString>
+            <LocalString>Unsafe Bean Declaration</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unsafe JNI</KeyString>
+            <LocalString>Unsafe JNI</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unsafe Mobile Code</KeyString>
+            <LocalString>Unsafe Mobile Code</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unsafe Public Field</KeyString>
+            <LocalString>Unsafe Public Field</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unsafe Reflection</KeyString>
+            <LocalString>Unsafe Reflection</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unused Field</KeyString>
+            <LocalString>Unused Field</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unused Method</KeyString>
+            <LocalString>Unused Method</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unused Validation Form</KeyString>
+            <LocalString>Unused Validation Form</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Unvalidated Action Form</KeyString>
+            <LocalString>Unvalidated Action Form</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Use After Free</KeyString>
+            <LocalString>Use After Free</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Use of AWT/Swing</KeyString>
+            <LocalString>Use of AWT/Swing</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Use of Class Loader</KeyString>
+            <LocalString>Use of Class Loader</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Use of Sockets</KeyString>
+            <LocalString>Use of Sockets</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Use of Synchronization Primitives</KeyString>
+            <LocalString>Use of Synchronization Primitives</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Use of a System Output Stream</KeyString>
+            <LocalString>Use of a System Output Stream</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Use of java.io</KeyString>
+            <LocalString>Use of java.io</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Validator Turned Off</KeyString>
+            <LocalString>Validator Turned Off</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Validator Without Form Field</KeyString>
+            <LocalString>Validator Without Form Field</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Weak Access Permissions</KeyString>
+            <LocalString>Weak Access Permissions</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Weak Cryptography</KeyString>
+            <LocalString>Weak Cryptography</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>getConnection</KeyString>
+            <LocalString>getConnection</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>null Argument to equals()</KeyString>
+            <LocalString>null Argument to equals()</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Check follows dereference</KeyString>
+            <LocalString>Check follows dereference</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Dereference follows check</KeyString>
+            <LocalString>Dereference follows check</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Pointer Error</KeyString>
+            <LocalString>Pointer Error</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Returning address of local variable</KeyString>
+            <LocalString>Returning address of local variable</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Type Mismatch</KeyString>
+            <LocalString>Type Mismatch</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Negative return value in unsigned function</KeyString>
+            <LocalString>Negative return value in unsigned function</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Signed return value in unsigned function</KeyString>
+            <LocalString>Signed return value in unsigned function</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Variable Never Used</KeyString>
+            <LocalString>Variable Never Used</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Value Never Read</KeyString>
+            <LocalString>Value Never Read</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Access Control</KeyString>
+            <LocalString>Access Control</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Database</KeyString>
+            <LocalString>Database</LocalString>
+        </Mapping>
+        <Mapping>
+            <KeyString>Just one of equals() and hashcode() Defined</KeyString>
+            <LocalString>Just one of equals() and hashcode() Defined</LocalString>
+        </Mapping>
+    </Localization>
+</RulePack>

@@ -1,0 +1,6 @@
+<apex:page standardController="Account" extensions="OpenRedirectController">
+    <apex:form>
+        <apex:commandButton action="{!onclick1}" value="onclick1 - redirect"/>
+        <br></br>
+    </apex:form>
+</apex:page>

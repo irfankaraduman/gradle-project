@@ -1,0 +1,8 @@
+<apex:page controller="UnsafeReflectionController">
+   <apex:form >
+      <apex:commandButton action="{!startRequest}" 
+              value="Start Request" reRender="result"/> 
+   </apex:form>
+
+   <apex:outputText id="result" value="{!result}" />
+</apex:page>

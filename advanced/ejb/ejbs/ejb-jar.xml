@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
+<ejb-jar>
+  <display-name>EJBModule_Session</display-name>
+  <enterprise-beans>
+    <session>
+      <display-name>Session</display-name>
+      <ejb-name>Session</ejb-name>
+      <home>ejbs.SessionHome</home>
+      <remote>ejbs.Session</remote>
+      <ejb-class>ejbs.SessionBean</ejb-class>
+      <session-type>Stateless</session-type>
+      <transaction-type>Container</transaction-type>
+    </session>
+  </enterprise-beans>
+  <assembly-descriptor>
+    <container-transaction>
+      <description>This value was set as a default by Sun ONE Studio.</description>
+      <method>
+        <ejb-name>Session</ejb-name>
+        <method-name>*</method-name>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+  </assembly-descriptor>
+</ejb-jar>

@@ -1,0 +1,6 @@
+#############
+#
+#  Example filter file for sourceanalyzer -filter option
+#
+
+Dangerous Function
