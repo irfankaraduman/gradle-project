@@ -1,6 +1,0 @@
-{
-  "firstName": "Sean",
-  "lastName": "Eidemiller",
-  "accountNumber": "0123456789",
-  "socialSecurityNumber": "111-22-3344"
-}

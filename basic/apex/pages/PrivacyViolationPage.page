@@ -1,8 +1,0 @@
-<apex:page controller="PrivacyViolationController">
-    <apex:form style="padding-top:10px;" id="SelfRegForm" forceSSL="true">       
-        <!------------Password------------>                      
-        <apex:inputSecret id="password" value="{!password}"/> 
-        <!-------Submit button------->       
-        <apex:commandButton value="Submit" action="{!registerUser}"/>
-    </apex:form>
-</apex:page>

@@ -1,7 +1,0 @@
-<apex:page controller="FrameSpoofingController">
-	<apex:form >
-        <apex:inputText value="{!url}" />
-        <apex:commandButton value="Submit" action="{!submitUrl}"/>
-    </apex:form>
-    <apex:iframe scrolling="true" width="100%" height="800" src="{!iframeUrl}" />
-</apex:page>

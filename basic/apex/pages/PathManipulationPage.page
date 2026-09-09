@@ -1,7 +1,0 @@
-<apex:page controller="PathManipulationController">
-    <apex:form >
-        <apex:inputText value="{!resourceName}" />
-        <apex:commandButton value="Find Resource" action="{!findResource}" />
-        <apex:outputLink value="{!resourceUrl}">{!resourceName}</apex:outputLink>
-    </apex:form>
-</apex:page>
