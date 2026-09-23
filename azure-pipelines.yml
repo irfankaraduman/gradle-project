@@ -41,7 +41,6 @@ stages:
 
                 Write-Host "=== Windows Version Check ==="
                 java -version
-                gradle -v
                 Write-Host "============================="
 
                 # Fortify, gradlew.bat (Windows) sürecini yakalayarak derleme anında translate eder
