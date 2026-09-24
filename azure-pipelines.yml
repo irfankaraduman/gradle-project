@@ -1,0 +1,80 @@
+trigger:
+  - none
+
+pool:
+  name: 'irfank'
+
+variables:
+  FORTIFY_BUILD_ID: 'gradle'
+  OUTPUT_FPR_FILE: 'gradle.fpr'
+  BUILD_COMMAND: 'gradlew build'
+  SSC_URL: 'https://192.168.13.177:8443/ssc/'
+  SSC_APP_NAME: 'Gradle'
+  SSC_APP_VERSION: 'azure-sca-scan'
+  # Windows dizin yolları:
+  JAVA_HOME_PATH: 'C:\Program Files\Amazon Corretto\jdk21.0.12_9'
+  
+
+stages:
+  - stage: SecurityScan
+    displayName: 'Fortify Security Scan'
+    jobs:
+      - job: ScanJob
+        displayName: 'Run Fortify Sourceanalyzer'
+        steps:
+          - checkout: self
+            clean: true
+
+          - task: CmdLine@2
+            displayName: 'Fortify Clean'
+            inputs:
+              script: 'sourceanalyzer -b $(FORTIFY_BUILD_ID) -clean'
+
+          # Windows PowerShell kullanarak sadece bu adımda Java/Gradle tanımlama, Kontrol ve Translate
+          - task: PowerShell@2
+            displayName: 'Fortify Translate'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $env:JAVA_HOME = "$(JAVA_HOME_PATH)"
+                $env:PATH="$env:JAVA_HOME\bin;$env:PATH"
+
+                Write-Host "=== Windows Version Check ==="
+                java -version
+                Write-Host "============================="
+
+                # Fortify, gradlew.bat (Windows) sürecini yakalayarak derleme anında translate eder
+                sourceanalyzer -b $(FORTIFY_BUILD_ID) $(BUILD_COMMAND)
+
+          - task: CmdLine@2
+            displayName: 'Fortify Scan'
+            inputs:
+              script: 'sourceanalyzer -b $(FORTIFY_BUILD_ID) -scan -f "$(System.DefaultWorkingDirectory)\$(OUTPUT_FPR_FILE)"'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish FPR Artifact'
+            inputs:
+              PathtoPublish: '$(System.DefaultWorkingDirectory)\$(OUTPUT_FPR_FILE)'
+              ArtifactName: 'FortifyScanResults'
+              publishLocation: 'Container'
+
+  - stage: UploadToSSC
+    displayName: 'Upload Results to SSC'
+    dependsOn: SecurityScan
+    jobs:
+      - job: UploadJob
+        displayName: 'Fortify SSC Upload'
+        steps:
+          - task: DownloadBuildArtifacts@1
+            displayName: 'Download FPR Artifact'
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'FortifyScanResults'
+              downloadPath: '$(System.DefaultWorkingDirectory)'
+
+          - task: CmdLine@2
+            displayName: 'Upload FPR to Fortify SSC'
+            inputs:
+              script: |
+                fortifyclient uploadFPR -url "$(SSC_URL)" -authtoken "$(FortifyAuthToken)" -file "$(System.DefaultWorkingDirectory)\FortifyScanResults\$(OUTPUT_FPR_FILE)" -application "$(SSC_APP_NAME)" -applicationVersion "$(SSC_APP_VERSION)"
