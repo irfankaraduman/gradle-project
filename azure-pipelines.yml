@@ -31,19 +31,17 @@ stages:
               script: 'sourceanalyzer -b $(FORTIFY_BUILD_ID) -clean'
 
           # Windows PowerShell kullanarak sadece bu adımda Java/Gradle tanımlama, Kontrol ve Translate
-          - task: PowerShell@2
+          - task: CmdLine@2
             displayName: 'Fortify Translate'
             inputs:
-              targetType: 'inline'
               script: |
-                $env:JAVA_HOME = "$(JAVA_HOME_PATH)"
-                $env:PATH="$env:JAVA_HOME\bin;$env:PATH"
+                set "JAVA_HOME=$(JAVA_HOME_PATH)"
+                set "PATH=%JAVA_HOME%\bin;%PATH%"
 
-                Write-Host "=== Windows Version Check ==="
+                echo === Windows Version Check ===
                 java -version
-                Write-Host "============================="
+                echo =============================
 
-                # Fortify, gradlew.bat (Windows) sürecini yakalayarak derleme anında translate eder
                 sourceanalyzer -b $(FORTIFY_BUILD_ID) $(BUILD_COMMAND)
 
           - task: CmdLine@2
