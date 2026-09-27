@@ -9,6 +9,10 @@ variables:
   SSC_URL: 'https://192.168.13.177:8443/ssc/'
   SSC_APP_NAME: 'Gradle'
   SSC_APP_VERSION: 'azure-sca-scan'
+  
+  # 8.3 Kısa ad kullanımı ('Program Files' yerine 'PROGRA~1')
+  PROJECT_JAVA_HOME: 'C:\Program Files\Amazon Corretto\jdk1.8.0_504' # Veya projeniz Java 8 ise Java 8 yolu
+  SCANCENTRAL_JAVA_PATH: 'C:\Program Files\Amazon Corretto\jdk17.0.20_10'
 
 stages:
   - stage: SecurityScan
@@ -21,7 +25,20 @@ stages:
             clean: true
 
           - task: CmdLine@2
-            displayName: 'Start ScanCentral Remote Scan & Upload to SSC'
+            displayName: 'Set Environments & Run ScanCentral'
             inputs:
               script: |
+                @echo off
+                :: 1. ScanCentral Client için Java 17 ortamı
+                set "SCANCENTRAL_JAVA_HOME=$(SCANCENTRAL_JAVA_PATH)"
+                
+                :: 2. Projenin paketlenmesi için proje Java ortamı
+                set "JAVA_HOME=$(PROJECT_JAVA_HOME)"
+                set "PATH=%JAVA_HOME%\bin;%SCANCENTRAL_JAVA_HOME%\bin;%PATH%"
+
+                echo === Java Check ===
+                java -version
+                echo ==================
+
+                :: 3. Remote Translation & Scan Tetikleme
                 scancentral -sscurl "$(SSC_URL)" -ssctoken "$(FortifyAuthToken)" start -bt gradle -bc "$(BUILD_COMMAND)" -upload -application "$(SSC_APP_NAME)" -version "$(SSC_APP_VERSION)"
