@@ -1,0 +1,27 @@
+trigger:
+  - none
+
+pool:
+  name: 'irfank'
+
+variables:
+  BUILD_COMMAND: 'gradlew build'
+  SSC_URL: 'https://192.168.13.177:8443/ssc/'
+  SSC_APP_NAME: 'Gradle'
+  SSC_APP_VERSION: 'azure-sca-scan'
+
+stages:
+  - stage: SecurityScan
+    displayName: 'Fortify ScanCentral Remote Scan'
+    jobs:
+      - job: ScanJob
+        displayName: 'Submit Scan to ScanCentral'
+        steps:
+          - checkout: self
+            clean: true
+
+          - task: CmdLine@2
+            displayName: 'Start ScanCentral Remote Scan & Upload to SSC'
+            inputs:
+              script: |
+                scancentral -sscurl "$(SSC_URL)" -ssctoken "$(FortifyAuthToken)" start -bt gradle -bc "$(BUILD_COMMAND)" -upload -application "$(SSC_APP_NAME)" -version "$(SSC_APP_VERSION)"
