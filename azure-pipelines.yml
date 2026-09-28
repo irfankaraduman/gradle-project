@@ -1,5 +1,4 @@
-trigger:
-  - none
+trigger: none
 
 pool:
   name: 'irfank'
@@ -7,42 +6,76 @@ pool:
 variables:
   FORTIFY_BUILD_ID: 'gradle'
   OUTPUT_FPR_FILE: 'gradle.fpr'
-  BUILD_COMMAND: 'gradlew build'
+  BUILD_COMMAND: 'gradlew clean build'
   SSC_URL: 'https://192.168.13.177:8443/ssc/'
   SSC_APP_NAME: 'Gradle'
   SSC_APP_VERSION: 'azure-sca-scan'
-  # Windows dizin yolları:
+  # Java 21 Dizini:
   JAVA_HOME_PATH: 'C:\Program Files\Amazon Corretto\jdk21.0.12_9'
-  
 
 stages:
-  - stage: SecurityScan
-    displayName: 'Fortify Security Scan'
+  - stage: BuildCheck
+    displayName: 'Gradle Build Check'
     jobs:
-      - job: ScanJob
-        displayName: 'Run Fortify Sourceanalyzer'
+      - job: TestBuild
+        displayName: 'Test Gradle Build'
         steps:
           - checkout: self
             clean: true
+
+          - task: CmdLine@2
+            displayName: 'Set Java 21 (JAVA_HOME)'
+            inputs:
+              script: |
+                echo ##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_PATH)
+                echo ##vso[task.prependpath]$(JAVA_HOME_PATH)\bin
+
+          - task: CmdLine@2
+            displayName: 'Check Java Version'
+            inputs:
+              script: 'java -version'
+
+          - task: CmdLine@2
+            displayName: 'Check Gradle Version'
+            inputs:
+              script: 'gradlew -v'
+
+          - task: CmdLine@2
+            displayName: 'Gradle Build'
+            inputs:
+              script: '$(BUILD_COMMAND)'
+
+  - stage: SecurityScan
+    displayName: 'Fortify Security Scan'
+    dependsOn: BuildCheck
+    jobs:
+      - job: ScanJob
+        displayName: 'Run Fortify Scan'
+        steps:
+          - checkout: self
+            clean: true
+
+          - task: CmdLine@2
+            displayName: 'Set Java 21 (JAVA_HOME)'
+            inputs:
+              script: |
+                echo ##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_PATH)
+                echo ##vso[task.prependpath]$(JAVA_HOME_PATH)\bin
+
+          - task: CmdLine@2
+            displayName: 'Check Java Version'
+            inputs:
+              script: 'java -version'
 
           - task: CmdLine@2
             displayName: 'Fortify Clean'
             inputs:
               script: 'sourceanalyzer -b $(FORTIFY_BUILD_ID) -clean'
 
-          # Windows PowerShell kullanarak sadece bu adımda Java/Gradle tanımlama, Kontrol ve Translate
           - task: CmdLine@2
             displayName: 'Fortify Translate'
             inputs:
-              script: |
-                set "JAVA_HOME=$(JAVA_HOME_PATH)"
-                set "PATH=%JAVA_HOME%\bin;%PATH%"
-
-                echo === Windows Version Check ===
-                java -version
-                echo =============================
-
-                sourceanalyzer -b $(FORTIFY_BUILD_ID) $(BUILD_COMMAND)
+              script: 'sourceanalyzer -b $(FORTIFY_BUILD_ID) $(BUILD_COMMAND)'
 
           - task: CmdLine@2
             displayName: 'Fortify Scan'
@@ -63,6 +96,8 @@ stages:
       - job: UploadJob
         displayName: 'Fortify SSC Upload'
         steps:
+          - checkout: none
+
           - task: DownloadBuildArtifacts@1
             displayName: 'Download FPR Artifact'
             inputs:
@@ -74,5 +109,4 @@ stages:
           - task: CmdLine@2
             displayName: 'Upload FPR to Fortify SSC'
             inputs:
-              script: |
-                fortifyclient uploadFPR -url "$(SSC_URL)" -authtoken "$(FortifyAuthToken)" -file "$(System.DefaultWorkingDirectory)\FortifyScanResults\$(OUTPUT_FPR_FILE)" -application "$(SSC_APP_NAME)" -applicationVersion "$(SSC_APP_VERSION)"
+              script: 'fortifyclient uploadFPR -url "$(SSC_URL)" -authtoken "$(FortifyAuthToken)" -file "$(System.DefaultWorkingDirectory)\FortifyScanResults\$(OUTPUT_FPR_FILE)" -application "$(SSC_APP_NAME)" -applicationVersion "$(SSC_APP_VERSION)"'
