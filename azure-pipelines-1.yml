@@ -1,44 +1,66 @@
-trigger:
-  - none
+trigger: none
 
 pool:
   name: 'irfank'
 
 variables:
-  BUILD_COMMAND: 'clean build'
+  BUILD_COMMAND: 'gradlew clean build'
   SSC_URL: 'https://192.168.13.177:8443/ssc/'
   SSC_APP_NAME: 'Gradle'
-  SSC_APP_VERSION: 'azure-sc-scan'
-  
-  # 8.3 Kısa ad kullanımı ('Program Files' yerine 'PROGRA~1')
-  PROJECT_JAVA_HOME: 'C:\PROGRA~1\Amazon Corretto\jdk21.0.12_9' # Veya projeniz Java 8 ise Java 8 yolu
-  SCANCENTRAL_JAVA_PATH: 'C:\PROGRA~1\Amazon Corretto\jdk17.0.20_10'
+  SSC_APP_VERSION: 'azure-sca-scan'
+  JAVA_HOME_PATH: 'C:\Program Files\Amazon Corretto\jdk21.0.12_9'
+  SCANCENTRAL_HOME_PATH: 'C:\Fortify\ScanCentral'
 
 stages:
-  - stage: SecurityScan
-    displayName: 'Fortify ScanCentral Remote Scan'
+  - stage: BuildCheck
+    displayName: 'Gradle Build Check'
     jobs:
-      - job: ScanJob
-        displayName: 'Submit Scan to ScanCentral'
+      - job: TestBuild
         steps:
           - checkout: self
             clean: true
 
           - task: CmdLine@2
-            displayName: 'Set Environments & Run ScanCentral'
+            displayName: 'Set Environment'
             inputs:
               script: |
-                @echo off
-                :: 1. ScanCentral Client için Java 17 ortamı
-                set "SCANCENTRAL_JAVA_HOME=$(SCANCENTRAL_JAVA_PATH)"
-                
-                :: 2. Projenin paketlenmesi için proje Java ortamı
-                set "JAVA_HOME=$(PROJECT_JAVA_HOME)"
-                set "PATH=%JAVA_HOME%\bin;%SCANCENTRAL_JAVA_HOME%\bin;%PATH%"
+                echo ##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_PATH)
+                echo ##vso[task.prependpath]$(JAVA_HOME_PATH)\bin
+                echo ##vso[task.prependpath]$(SCANCENTRAL_HOME_PATH)\bin
 
-                echo === Java Check ===
-                java -version
-                echo ==================
+          - task: CmdLine@2
+            displayName: 'Check Java Version'
+            inputs:
+              script: 'java -version'
 
-                :: 3. Remote Translation & Scan Tetikleme
-                scancentral -sscurl "$(SSC_URL)" -ssctoken "$(FortifyAuthToken)" start -bt gradle -bc "$(BUILD_COMMAND)" -upload -application "$(SSC_APP_NAME)" -version "$(SSC_APP_VERSION)"
+          - task: CmdLine@2
+            displayName: 'Check Gradle Version'
+            inputs:
+              script: 'gradlew -v'
+
+          - task: CmdLine@2
+            displayName: 'Gradle Build'
+            inputs:
+              script: '$(BUILD_COMMAND)'
+
+  - stage: RemoteScan
+    displayName: 'ScanCentral Remote Scan'
+    dependsOn: BuildCheck
+    jobs:
+      - job: ScanJob
+        steps:
+          - checkout: self
+            clean: true
+
+          - task: CmdLine@2
+            displayName: 'Set Environment'
+            inputs:
+              script: |
+                echo ##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_PATH)
+                echo ##vso[task.prependpath]$(JAVA_HOME_PATH)\bin
+                echo ##vso[task.prependpath]$(SCANCENTRAL_HOME_PATH)\bin
+
+          - task: CmdLine@2
+            displayName: 'ScanCentral Remote Scan'
+            inputs:
+              script: 'scancentral -sscurl "$(SSC_URL)" -ssctoken "$(FortifyAuthToken)" start -bt gradle -bc "clean build" -upload -application "$(SSC_APP_NAME)" -version "$(SSC_APP_VERSION)" -uptoken "$(FortifyAuthToken)"'
