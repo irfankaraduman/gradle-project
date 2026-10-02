@@ -7,7 +7,7 @@ variables:
   BUILD_COMMAND: 'gradlew clean build'
   SSC_URL: 'https://192.168.13.177:8443/ssc/'
   SSC_APP_NAME: 'Gradle'
-  SSC_APP_VERSION: 'azure-sca-scan'
+  SSC_APP_VERSION: 'azure-sc-scan'
   JAVA_HOME_PATH: 'C:\Program Files\Amazon Corretto\jdk21.0.12_9'
   SCANCENTRAL_HOME_PATH: 'C:\Fortify\ScanCentral'
 
